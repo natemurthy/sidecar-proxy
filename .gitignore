@@ -1,0 +1,4 @@
+sidecar-proxy
+version
+vendor/
+env.sh

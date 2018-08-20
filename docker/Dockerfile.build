@@ -1,0 +1,16 @@
+FROM golang:1.9-alpine3.6
+
+ENV service_path /go/src/github.com/natemurthy/sidecar-proxy
+ENV GOPATH /go
+ENV PATH="${PATH}:${GOPATH}"
+
+RUN mkdir -p ${service_path}
+
+ADD . ${service_path}
+
+WORKDIR ${service_path}
+
+RUN apk add --update --no-cache git && \
+    go get -u github.com/golang/dep/cmd/dep && dep ensure && \
+    go get ./... && \
+    go build -o /tmp/sidecar-proxy
